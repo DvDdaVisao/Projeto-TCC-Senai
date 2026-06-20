@@ -1,0 +1,142 @@
+/* Configurações Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #22252a;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #2b2e33;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Barra de Ferramentas (Search e Botões) */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: none;
+    border-radius: 20px;
+    background-color: #d1d1d6;
+    color: #333;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8e8e93;
+    font-size: 14px;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-editar {
+    background-color: #448639;
+    color: #ffffff;
+}
+
+.btn-editar:hover {
+    background-color: #386f2f;
+}
+
+.btn-adicionar {
+    background-color: #4fa135;
+    color: #ffffff;
+}
+
+.btn-adicionar:hover {
+    background-color: #41852b;
+}
+
+/* Estilização da Tabela */
+.table-container {
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.custom-table th {
+    background-color: #2b2e33;
+    color: #a0a5ad;
+    padding: 18px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #234221;
+    border-right: 1px solid #234221;
+}
+
+.custom-table th:last-child {
+    border-right: none;
+}
+
+.custom-table td {
+    padding: 22px;
+    border-bottom: 1px solid #234221;
+    border-right: 1px solid #234221;
+    height: 45px; /* Mantém a altura das células vazias */
+}
+
+.custom-table td:last-child {
+    border-right: none;
+}
+
+/* Efeito sutil ao passar o mouse nas linhas preenchidas futuramente */
+.custom-table tbody tr:hover {
+    background-color: #32363c;
+}
