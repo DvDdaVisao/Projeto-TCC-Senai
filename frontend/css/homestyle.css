@@ -75,6 +75,7 @@ body {
     letter-spacing: 1px;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
+    color: white;
 }
 
 .btn:active {
@@ -139,4 +140,151 @@ body {
 /* Efeito sutil ao passar o mouse nas linhas preenchidas futuramente */
 .custom-table tbody tr:hover {
     background-color: #32363c;
+}
+
+/* ==========================================
+   ESTILIZAÇÃO DO MODAL (POP-UP)
+   ========================================== */
+
+/* O fundo escurecido que cobre a tela inteira */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); /* Sombra transparente escura */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Começa invisível e bloqueado */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000; /* Garante que fica por cima de tudo */
+}
+
+/* Esta classe será adicionada pelo JavaScript para fazer o modal aparecer */
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* A caixinha centralizada do formulário */
+.modal-box {
+    background-color: #26292b; /* O mesmo cinza escuro do seu container */
+    border: 1.5px solid #193018; /* Borda no azul escuro do botão */
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    color: #ffffff;
+}
+
+/* Topo do modal (Título e botão de fechar) */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #3d4246;
+    padding-bottom: 10px;
+}
+
+.modal-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Botão X para fechar */
+.close-btn {
+    background: none;
+    border: none;
+    color: #a3a3a3;
+    font-size: 22px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+/* Organização dos campos de texto */
+.modal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #a3a3a3;
+    margin-bottom: 6px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Estilização dos Inputs, Textarea e Selects para ficarem escuros */
+.modal-form input, 
+.modal-form textarea, 
+.modal-form select {
+    background-color: #1a1c1e; /* Fundo dos campos igual ao fundo do site */
+    border: 1px solid #3d4246;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.modal-form input:focus, 
+.modal-form textarea:focus, 
+.modal-form select:focus {
+    border-color: #193018; /* Brilha azul ao clicar */
+}
+
+/* Input desabilitado (como a TAG que não pode mudar) */
+.modal-form input:disabled {
+    background-color: #131415;
+    color: #757575;
+    cursor: not-allowed;
+}
+
+/* Coloca a Criticidade e Etapa lado a lado */
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Botão de Salvar lá embaixo */
+.btn-salvar {
+    background-color: #234221;
+    color: white;
+    border: 1px solid #377a32;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+}
+
+.btn-salvar:hover {
+    background-color: #193018;
 }

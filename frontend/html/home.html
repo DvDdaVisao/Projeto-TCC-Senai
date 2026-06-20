@@ -9,14 +9,20 @@
 <body>
 
     <div class="container">
-        <div class="toolbar">
+        <div class="toolbar" id="toolbarContainer">
             <div class="search-container">
                 <input type="text" class="search-input" placeholder="Pesquisar...">
                 <span class="search-icon">&#128269;</span>
             </div>
-            <div class="button-group">
-                <button class="btn btn-editar">EDITAR</button>
-                <button class="btn btn-adicionar">ADICIONAR</button>
+            
+            <div class="button-group" id="botoesPadrao">
+                <button class="btn btn-editar" onclick="ativarModoEdicao()">EDITAR</button>
+                <button class="btn btn-adicionar" onclick="abrirParaCadastrar()">ADICIONAR</button>
+            </div>
+
+            <div class="button-group" id="avisoSelecao" style="display: none;">
+                <button class="btn btn-selecionar" style="background-color: #5c913b; cursor: default;">Selecione o Objeto</button>
+                <button class="btn btn-cancelar" onclick="cancelarModoEdicao()" style="background-color: #5c913b; padding: 10px 15px;">X</button>
             </div>
         </div>
 
@@ -28,23 +34,71 @@
                         <th>NOME</th>
                         <th>SETOR</th>
                         <th>OBSERVAÇÃO</th>
-                        <th>CRITICIDADE</th>
-                        <th>ETAPA</th>
+                        <th id="thCriticidade" onclick="ordenarPorCriticidade()" style="cursor: pointer; user-select: none;">CRITICIDADE <span id="setaCriticidade">↕</span></th>
+                        <th id="thEtapa" onclick="ordenarPorEtapa()" style="cursor: pointer; user-select: none;">ETAPA <span id="setaEtapa">↕</span></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                </tbody>
+                    </tbody>
             </table>
         </div>
     </div>
 
+    <div class="modal-overlay" id="modalEquipamento">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="modalTitle">Editar Equipamento</h2>
+                <button class="close-btn" onclick="fecharModal()">X</button>
+            </div>
+            
+            <form class="modal-form" id="formEquipamento">
+                <div class="form-group">
+                    <label>TAG</label>
+                    <input type="text" id="inputTag" placeholder="Ex: PMP-001" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nome do Equipamento</label>
+                    <input type="text" id="inputNome" placeholder="Ex: Bomba de Polpa" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Fabricante</label>
+                    <input type="text" id="inputFabricante" placeholder="Ex: WEG, Siemens">
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição Técnica</label>
+                    <textarea id="txtDescricao" rows="3" placeholder="Especificações do item..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Criticidade</label>
+                        <select id="selectCriticidade">
+                            <option value="baixa">Baixa</option>
+                            <option value="media">Média</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Etapa de Reparo</label>
+                        <select id="selectEtapa">
+                            <option value="envio">Envio</option>
+                            <option value="peritagem">Peritagem</option>
+                            <option value="aprovacao">Aprovação</option>
+                            <option value="execucao">Execução</option>
+                            <option value="retorno">Retorno</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-salvar">SALVAR ALTERAÇÕES</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../script/script.js"></script>
 </body>
 </html>

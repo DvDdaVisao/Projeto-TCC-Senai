@@ -191,3 +191,13 @@ body {
         font-size: 2rem;
     }
 }
+
+.table-container {
+    min-height: 400px; /* Mantém o tamanho do painel de gerenciamento */
+    background-color: #1c1c1e; /* Ajuste para a cor de fundo do seu sistema */
+    border-radius: 8px;
+    overflow-y: auto;
+}
+.custom-table tr {
+    height: 52px; /* Garante que as linhas fiquem com um espaçamento confortável */
+}
