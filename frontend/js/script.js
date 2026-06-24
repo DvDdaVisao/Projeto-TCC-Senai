@@ -33,7 +33,7 @@ if (loginForm) {
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault(); 
         console.log("Formulário de login interceptado com sucesso.");
-        window.location.href = "frontend/html/home.html"; 
+        window.location.href = "frontend/home.html";
     });
 }
 
