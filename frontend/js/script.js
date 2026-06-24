@@ -1,20 +1,16 @@
-// ==========================================
 // VARIÁVEIS DE CONTROLE DE ESTADO
-// ==========================================
-let modoEdicaoAtivo = false; 
-let linhaSendoEditada = null; 
-let ordemCrescenteCriticidade = true; 
-let ordemCrescenteEtapa = true; 
+let modoEdicaoAtivo = false;
+let linhaSendoEditada = null;
+let ordemCrescenteCriticidade = true;
+let ordemCrescenteEtapa = true;
+let visualizandoArquivados = false;
 
 // Gerenciamento de dados em memória (evita que sumam ao alternar telas)
-let itensAtivos = []; 
-let itensArquivados = []; 
-let historicoAlteracoes = []; // Armazena os logs de modificações
-let visualizandoArquivados = false; 
+let itensAtivos = [];
+let itensArquivados = [];
+let historicoAlteracoes = [];
 
-// ==========================================
 // FUNÇÃO AUXILIAR: REGISTRO DE LOGS DO HISTÓRICO
-// ==========================================
 function registrarLog(acao, tag, detalhes) {
     const agora = new Date();
     const dataFormatada = agora.toLocaleDateString('pt-BR');
@@ -22,7 +18,7 @@ function registrarLog(acao, tag, detalhes) {
     
     const novoLog = {
         data: `${dataFormatada} às ${horaFormatada}`,
-        acao: acao, // "CADASTRO", "EDIÇÃO", "ARQUIVAMENTO", "DESARQUIVAMENTO"
+        acao: acao,
         tag: tag.toUpperCase(),
         detalhes: detalhes
     };
@@ -31,9 +27,7 @@ function registrarLog(acao, tag, detalhes) {
     historicoAlteracoes.unshift(novoLog);
 }
 
-// ==========================================
 // LÓGICA DA TELA DE LOGIN (RF1)
-// ==========================================
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', function(event) {
@@ -43,28 +37,26 @@ if (loginForm) {
     });
 }
 
-// ==========================================
 // FUNÇÃO DE RENDERIZAÇÃO DA TABELA
-// ==========================================
 function renderizarTabela() {
     const tabelaBody = document.querySelector('.custom-table tbody');
     if (!tabelaBody) return;
-    
     tabelaBody.innerHTML = "";
     const listaAtual = visualizandoArquivados ? itensArquivados : itensAtivos;
 
+    //Mensagem de Nenhum Item Encontrado
     if (listaAtual.length === 0) {
         tabelaBody.innerHTML = `<tr><td colspan="6" style="color: #a0a5ad; font-style: italic; padding: 30px;">Nenhum item encontrado.</td></tr>`;
         return;
     }
 
+    //Criação de Linhas
     listaAtual.forEach((item, index) => {
         const novaLinha = document.createElement('tr');
         novaLinha.style.cursor = "pointer";
-        
-        // Armazena a referência do objeto original na tr para facilitar o rastreio
         novaLinha.dataset.index = index;
 
+        // Adiciona o evento de clique para abrir o modal de edição/visualização
         novaLinha.addEventListener('click', function() {
             abrirRF3(item.tag, this);
         });
@@ -85,30 +77,24 @@ function renderizarTabela() {
     });
 }
 
-// ==========================================
-// LÓGICA DA TELA HOME & MODAL (RF2 e RF3)
-// ==========================================
-function activarModoEdicao() { 
-    ativarModoEdicao();
-}
-
+// LÓGICA DA TELA HOME & MODAL
 function ativarModoEdicao() {
-    // Se estiver na tela de arquivados, impede o modo edição
     if (visualizandoArquivados) return;
 
     modoEdicaoAtivo = true;
+    // Oculta os botões padrão e exibe o aviso de seleção
     document.getElementById('botoesPadrao').style.display = 'none';
     document.getElementById('avisoSelecao').style.display = 'flex';
 }
 
 function cancelarModoEdicao() {
     modoEdicaoAtivo = false;
+    // Oculta o aviso de seleção e exibe os botões padrão
     document.getElementById('avisoSelecao').style.display = 'none';
     document.getElementById('botoesPadrao').style.display = 'flex';
 }
 
 function abrirRF3(tagEquipamento, elementoLinha) {
-    // Se não estiver no modo edição E estiver na tela de ativos, bloqueia o clique
     if (!modoEdicaoAtivo && !visualizandoArquivados) {
         console.log("Clique bloqueado: Sistema não está no modo de edição.");
         return; 
@@ -185,9 +171,7 @@ function fecharModal() {
     linhaSendoEditada = null;
 }
 
-// ==========================================
 // ESCUTADOR DO FORMULÁRIO (SALVAR / CADASTRAR)
-// ==========================================
 const formEquipamento = document.getElementById('formEquipamento');
 
 if (formEquipamento) {
@@ -243,9 +227,7 @@ if (formEquipamento) {
     });
 }
 
-// ==========================================
 // LÓGICA DE ARQUIVAMENTO & DESARQUIVAMENTO
-// ==========================================
 function arquivarEquipamento() {
     if (!linhaSendoEditada) return;
     const idx = linhaSendoEditada.dataset.index;
@@ -322,9 +304,7 @@ function verArquivados() {
     renderizarTabela();
 }
 
-// ==========================================
 // EXIBIÇÃO DO MODAL DE HISTÓRICO DE ALTERAÇÕES
-// ==========================================
 function verHistorico() {
     cancelarModoEdicao();
     const modal = document.getElementById('modalHistorico');
@@ -373,9 +353,7 @@ function fecharModalHistorico() {
     if (modal) modal.classList.remove('active');
 }
 
-// ==========================================
 // FUNÇÃO EXCLUSIVA: DOWNLOAD EM ARQUIVO TEXTO DO HISTÓRICO
-// ==========================================
 function baixarHistorico() {
     if (historicoAlteracoes.length === 0) {
         alert("Não há registros no histórico para fazer o download.");
@@ -415,9 +393,7 @@ function baixarHistorico() {
     URL.revokeObjectURL(url);
 }
 
-// ==========================================
 // LÓGICA DA BARRA DE PESQUISA (FILTRO DINÂMICO)
-// ==========================================
 const inputPesquisa = document.querySelector('.search-input');
 
 if (inputPesquisa) {
@@ -425,7 +401,7 @@ if (inputPesquisa) {
         const termoPesquisa = this.value.toLowerCase();
         const linhasTabela = document.querySelectorAll('.custom-table tbody tr');
 
-        linhasTabela.forEach(function(linha) {
+        linhasTabela.forEach((linha) => {
             if (linha.cells.length > 1) { 
                 const tag = linha.cells[0].innerText.toLowerCase();
                 const nome = linha.cells[1].innerText.toLowerCase();
@@ -440,9 +416,7 @@ if (inputPesquisa) {
     });
 }
 
-// ==========================================
 // LÓGICA DE ORDENAÇÃO POR CRITICIDADE
-// ==========================================
 function ordenarPorCriticidade() {
     const listaParaOrdenar = visualizandoArquivados ? itensArquivados : itensAtivos;
     const pesos = { 'ALTA': 3, 'MÉDIA': 2, 'MEDIA': 2, 'BAIXA': 1 };
@@ -460,9 +434,7 @@ function ordenarPorCriticidade() {
     renderizarTabela();
 }
 
-// ==========================================
 // LÓGICA DE ORDENAÇÃO POR ETAPA DE REPARO
-// ==========================================
 function ordenarPorEtapa() {
     const listaParaOrdenar = visualizandoArquivados ? itensArquivados : itensAtivos;
     const fluxoEtapas = { 'ENVIO': 1, 'PERITAGEM': 2, 'APROVAÇÃO': 3, 'APROVACAO': 3, 'EXECUÇÃO': 4, 'EXECUCAO': 4, 'RETORNO': 5 };
